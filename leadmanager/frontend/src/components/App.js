@@ -1,7 +1,11 @@
 import React, {Component, Fragment} from "react";
 import ReactDom from "react-dom";
-import Header from './layout/Header'
+
+
+import Header from './layout/Header';
 import Dashboard from "./leads/Dashboard";
+
+
 import { Provider } from "react-redux";
 import store from "../store";
 
@@ -16,7 +20,7 @@ class App extends Component {
                     </div>
                 </Fragment>
             </Provider>
-        )
+        );
     }
 }
 

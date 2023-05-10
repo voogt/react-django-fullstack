@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { getLeads } from "../../actions/leads";
 
+
 export class Leads extends Component{
-
-    static propTypes = {
+    static PropTypes = {
         leads: PropTypes.array.isRequired
-    }
+    };
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getLeads();
     }
 
     render(){
-        return(
-            <div>
-                <h1>Leads List</h1>
+        return (
+            <Fragment>
+                <h2>Leads</h2>
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -34,19 +34,19 @@ export class Leads extends Component{
                                 <td>{lead.name}</td>
                                 <td>{lead.email}</td>
                                 <td>{lead.message}</td>
+                                <td>{lead.created_at}</td>
                                 <td><button className="btn btn-danger btn-sm">Delete</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-            </div>
-        )
+            </Fragment>
+        );
     }
 }
 
 const mapStateToProps = state => ({
-    //reducer first, part of state next
-    leads: state.leads.leads
-})
+    Leads: state.leads.leads
+});
 
-export default connect(mapStateToProps, {getLeads})(Leads);
+export default connect(mapStateToProps, { getLeads })(Leads);
