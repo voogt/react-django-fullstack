@@ -13,7 +13,7 @@ export class Header extends Component{
                     <a className="navbar-brand" href="#">Lead Manager</a>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Home</a>
+                        <Link to="/" className="nav-link">Home</Link>
                         </li>
                         
                     </ul>

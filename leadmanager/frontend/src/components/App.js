@@ -5,9 +5,11 @@ import Dashboard from "./leads/Dashboard";
 import { Provider } from "react-redux";
 import store from "../store";
 import Alerts from "./layout/Alerts";
-import {HashRouter as Router, Route, Routes, Redirect} from 'react-router-dom';
+import {HashRouter as Router, Route, Routes} from 'react-router-dom';
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
+import PrivateRoute from "./common/PrivateRoute";
+import { loadUser } from "../actions/auth";
 
 // Alert Options
 
@@ -17,6 +19,11 @@ const alertOptions = {
 }
 
 class App extends Component {
+
+    componentDidMount(){
+        store.dispatch(loadUser());
+    }
+
     render(){
         return (
             <Provider store={store}>
@@ -26,9 +33,11 @@ class App extends Component {
                         <Alerts />
                         <div className="container">
                             <Routes>
-                                <Route  path="/" element={<Dashboard/>}/>
-                                <Route  path="/login" element={<Login/>}/>
-                                <Route  path="/register" element={<Register/>}/>
+                                <Route element={<PrivateRoute/>}>
+                                    <Route path="/" element={<Dashboard/>} exact/>
+                                </Route>
+                                <Route path="/login" element={<Login/>} exact/>
+                                <Route path="/register" element={<Register/>} exact/>
                             </Routes>
                         </div>
                     </Fragment>
