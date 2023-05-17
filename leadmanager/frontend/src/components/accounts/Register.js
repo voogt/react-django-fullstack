@@ -1,5 +1,9 @@
 import React, {Component} from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { register } from "../../actions/auth";
+import { createMessage } from "../../actions/messages";
 
 export class Register extends Component{
 
@@ -10,14 +14,33 @@ export class Register extends Component{
         password2: ''
     };
 
+    static propTypes = {
+        register: PropTypes.func.isRequired,
+        isAuthenticated: PropTypes.bool
+    }
+
     onSubmit = e => {
         e.preventDefault();
-        
+        const {username, email, password, password2} = this.state;
+        if(password !== password2){
+            this.props.createMessage({ passwordNotMatch: 'Passwords Do not Match' })
+        }
+        else{
+            const newUser = {
+                username,
+                password,
+                email
+            }
+            this.props.register(newUser);
+        }
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value })
 
     render(){
+        if(this.props.isAuthenticated){
+            return <Navigate to="/"/>
+        }
         const {username, email, password, password2} = this.state
         return(
             <div className="col-md-6 m-auto">
@@ -36,12 +59,12 @@ export class Register extends Component{
 
                         <div className="form-group">
                             <label>Password</label>
-                            <input className="form-control" type="password" name="message" onChange={this.onChange} value={password}/>
+                            <input className="form-control" type="password" name="password" onChange={this.onChange} value={password}/>
                         </div>
 
                         <div className="form-group">
                             <label>Password Confirm</label>
-                            <input className="form-control" type="password" name="message" onChange={this.onChange} value={password2}/>
+                            <input className="form-control" type="password" name="password2" onChange={this.onChange} value={password2}/>
                         </div>
 
                         <div className="form-group">
@@ -57,4 +80,8 @@ export class Register extends Component{
     }
 }
 
-export default Register
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isLoggedIn
+})
+
+export default connect(mapStateToProps, {register, createMessage})(Register)

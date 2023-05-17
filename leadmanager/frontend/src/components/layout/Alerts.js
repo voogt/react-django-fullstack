@@ -38,6 +38,12 @@ export class Alerts extends Component{
             if(error.msg.message){
                 window.alert(`Message: ${error.msg.message.join()}`)
             }
+            if(error.msg.non_field_errors){
+                window.alert(`${error.msg.non_field_errors.join()}`)
+            }
+            if(error.msg.username){
+                window.alert(`${error.msg.username.join()}`)
+            }
         }
 
         if(message !== prevProps.message){
@@ -46,6 +52,9 @@ export class Alerts extends Component{
             }
             if(message.leadAdded){
                 window.alert(message.leadAdded)
+            }
+            if(message.passwordNotMatch){
+                window.alert(message.passwordNotMatch)
             }
         }
     }

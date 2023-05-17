@@ -20,7 +20,7 @@ const alertOptions = {
 
 class App extends Component {
 
-    componentDidMount(){
+    componentWillMount(){
         store.dispatch(loadUser());
     }
 
@@ -34,10 +34,10 @@ class App extends Component {
                         <div className="container">
                             <Routes>
                                 <Route element={<PrivateRoute/>}>
-                                    <Route path="/" element={<Dashboard/>} exact/>
+                                    <Route path="/" element={<Dashboard/>} />
                                 </Route>
-                                <Route path="/login" element={<Login/>} exact/>
-                                <Route path="/register" element={<Register/>} exact/>
+                                <Route path="/login" element={<Login/>} />
+                                <Route path="/register" element={<Register/>} />
                             </Routes>
                         </div>
                     </Fragment>

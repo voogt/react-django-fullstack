@@ -1,23 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { redirect, Outlet, Navigate} from "react-router-dom"
 import {connect} from 'react-redux';
-import PropTypes from "prop-types"
 
-const PrivateRoute = (auth) => {
-    if(auth.isLoading){
+
+const PrivateRoute = (props) => {
+    if(props.isLoading){
         return(<h2>Loading...</h2>)
     }
-    else if(!auth.isLoggedIn){
+    else if(!props.isLoggedIn){
         return <Navigate to="/login"/>
     }
     else{
+        console.log(props)
        return <Outlet />
     }
-
 }
 
-const mapStateToProps = (state) => ({
-    auth: state.auth
-})
+const mapStateToProps = function(state){
+    return{
+       isLoading: state.auth.isLoading,
+       isLoggedIn: state.auth.isLoggedIn
+    }
+}
 
 export default connect(mapStateToProps)(PrivateRoute);
